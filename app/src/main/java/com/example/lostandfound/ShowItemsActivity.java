@@ -68,7 +68,7 @@ public class ShowItemsActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
         }
     }
-    
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();

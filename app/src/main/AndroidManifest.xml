@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAdvertActivity"></activity>
-        <activity android:name=".ShowItemsActivity"></activity>
-        <activity android:name=".RemoveItemActivity"></activity>
+        <activity android:name=".CreateAdvertActivity"/>
+        <activity android:name=".ShowItemsActivity"/>
+        <activity android:name=".RemoveItemActivity"/>
+        <activity android:name=".MapActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBZLOCRrMbEv445HOuAayng2I3LPj_DQAI"/>
     </application>
-
 </manifest>

@@ -21,6 +21,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,7 +37,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_PHONE + " TEXT, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_DATE + " TEXT, " +
-                COLUMN_LOCATION + " TEXT)";
+                COLUMN_LOCATION + " TEXT, " +
+                COLUMN_LATITUDE + " REAL, " +
+                COLUMN_LONGITUDE + " REAL)";
         db.execSQL(createTable);
     }
 
@@ -45,7 +49,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertItem(String postType, String name, String phone, String description, String date, String location) {
+    public boolean insertItem(String postType, String name, String phone, String description, String date, String location, double latitude, double longitude) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_POST_TYPE, postType);
@@ -54,8 +58,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_DESCRIPTION, description);
         contentValues.put(COLUMN_DATE, date);
         contentValues.put(COLUMN_LOCATION, location);
+        contentValues.put(COLUMN_LATITUDE, latitude);
+        contentValues.put(COLUMN_LONGITUDE, longitude);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        return result != -1; // returns true if insert is successful
+        return result != -1;
     }
 
     public Cursor getAllItems() {
@@ -66,5 +72,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public Integer deleteItem(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{id});
+    }
+
+    public Cursor getAllLocations() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT " + COLUMN_LATITUDE + ", " + COLUMN_LONGITUDE + ", " + COLUMN_LOCATION + " FROM " + TABLE_NAME, null);
     }
 }
